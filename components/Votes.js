@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import PropTyles from 'prop-types'
+import PropTypes from 'prop-types'
 
 const Container = styled.Text`
     color:rgb(230,230,230);

@@ -2,6 +2,9 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Detail from "../screens/Detail";
 import Tabs from "./Tabs";
+import DetailContainer from "../screens/Detail";
+
+
 const Stack = createStackNavigator();
 
 export default () => (
@@ -17,6 +20,6 @@ export default () => (
     headerBackTitleVisible:false
   }}>
     <Stack.Screen name="Tabs" component={Tabs} />
-    <Stack.Screen name="Detail" component={Detail} />
+    <Stack.Screen name="Detail" component={DetailContainer} />
   </Stack.Navigator>
 );

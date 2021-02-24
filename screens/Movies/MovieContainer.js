@@ -5,6 +5,7 @@ import {movieApi} from '../../api'
 import MoviePresenter from './MoviePresenter';
 
 export default ({navigation}) => {
+    const [refreshing, setRefreshing] = useState(false);
     const [movies, setMovies] = useState({
         loading: true,
         nowPlaying: [],
@@ -31,9 +32,9 @@ export default ({navigation}) => {
     useEffect(() => {
         getData();
     }, []);
-
+    
     return (
-        <MoviePresenter {...movies}/>
+        <MoviePresenter refreshFn = {getData} {...movies}/>
     )
 }
 

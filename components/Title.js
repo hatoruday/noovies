@@ -14,7 +14,7 @@ const Title = ({title}) => (
 )
 
 
-Text.propTypes = {
+Title.propTypes = {
     title:PropTypes.string.isRequired
 }
 
