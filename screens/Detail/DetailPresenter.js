@@ -124,6 +124,14 @@ export default ({ result, loading, refreshFn }) => (
             </DataValue>
           </>
         )}
+        {result.number_of_episodes && (
+          <>
+            <DataName>Seasons / Episodes</DataName>
+            <DataValue>
+            {result.number_of_seasons} / {result.number_of_epidoes}
+            </DataValue>
+          </>
+        )}
       </Data>
     </>
   </ScrollContainer>
