@@ -6,6 +6,10 @@ import { Dimensions, ActivityIndicator } from "react-native";
 import Poster from "../../components/Poster";
 import Votes from "../../components/Votes";
 import { formatDate } from "../../utils";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import Link from "../../components/Detail/Link";
+
+
 
 const BG = styled.Image`
   width: 100%;
@@ -57,81 +61,109 @@ const DataValue = styled.Text`
   font-weight: 500;
 `;
 
-export default ({ result, loading, refreshFn }) => (
-  <ScrollContainer loading={false} refreshFn = {refreshFn} contentContianerStyle = {{
-      paddingBottom: 80
-  }}>
+export default ({ openBrowser, result, loading }) => (
+  <ScrollContainer
+    loading={false}
+    contentContainerStyle={{ paddingBottom: 80 }}
+  >
     <>
       <Header>
         <BG source={{ uri: apiImage(result.backgroundImage, "-") }} />
         <Container>
-          { result.poster && <Poster url={result.poster} />}
+          <Poster url={result.poster} />
           <Info>
-              {result.title && (
-                <Title>{result.title}</Title>
-              )}
-            {result.votes && <Votes votes={result.votes} />}
+            <Title>{result.title}</Title>
+            {result.votes ? <Votes votes={result.votes} /> : null}
           </Info>
         </Container>
       </Header>
       <Data>
-        {result.overview && (
+        {result.overview ? (
           <>
             <DataName>Overview</DataName>
             <DataValue>{result.overview}</DataValue>
           </>
-        )}
-        {loading && (
+        ) : null}
+        {loading ? (
           <ActivityIndicator style={{ marginTop: 30 }} color={"white"} />
-        )}
-        {result.spoken_languages && (
+        ) : null}
+        {result.spoken_languages ? (
           <>
             <DataName>Languages</DataName>
             <DataValue>
               {result.spoken_languages.map(l => `${l.name} `)}
             </DataValue>
           </>
-        )}
-        {result.release_date && (
+        ) : null}
+        {result.release_date ? (
           <>
             <DataName>Release Date</DataName>
             <DataValue>{formatDate(result.release_date)}</DataValue>
           </>
-        )}
-        {result.status && (
+        ) : null}
+        {result.status ? (
           <>
-            <DataName>status</DataName>
+            <DataName>Status</DataName>
             <DataValue>{result.status}</DataValue>
           </>
-        )}
-        {result.runtime && (
+        ) : null}
+        {result.runtime ? (
           <>
-            <DataName>runtime</DataName>
-            <DataValue>{result.runtime}</DataValue>
+            <DataName>Runtime</DataName>
+            <DataValue>{result.runtime} minutes</DataValue>
           </>
-        )}
-        {result.first_air_date && (
+        ) : null}
+        {result.first_air_date ? (
           <>
-            <DataName>first_air_date</DataName>
-            <DataValue>{result.first_air_date}</DataValue>
+            <DataName>First Air Date</DataName>
+            <DataValue>{formatDate(result.first_air_date)}</DataValue>
           </>
-        )}
-        {result.genres && (
+        ) : null}
+        {result.genres ? (
           <>
             <DataName>Genres</DataName>
             <DataValue>
-              {result.genres.map((g, index) => index + 1 === result.genres.length ? g.name : `${g.name}, `)}
+              {result.genres.map((g, index) =>
+                index + 1 === result.genres.length ? g.name : `${g.name}, `
+              )}
             </DataValue>
           </>
-        )}
-        {result.number_of_episodes && (
+        ) : null}
+        {result.number_of_episodes ? (
           <>
             <DataName>Seasons / Episodes</DataName>
             <DataValue>
-            {result.number_of_seasons} / {result.number_of_epidoes}
+              {result.number_of_seasons} / {result.number_of_episodes}
             </DataValue>
           </>
-        )}
+        ) : null}
+        {result.imdb_id ? (
+          <>
+            <DataName>Links</DataName>
+            <Link
+              text={"IMDB Page"}
+              icon={"imdb"}
+              onPress={() =>
+                openBrowser(`https://www.imdb.com/title/${result.imdb_id}`)
+              }
+            />
+          </>
+        ) : null}
+        {result.videos?.results?.length > 0 ? (
+          <>
+            <DataName>Video</DataName>
+            {result.videos.results?.map(video => (
+              <Link
+                text={video.name}
+                key={video.id}
+                icon="youtube-play"
+                onPress={() =>
+                  openBrowser(`https://www.youtube.com/watch?v=${video.key}`)
+                }
+              />
+            ))}
+          </>
+        ) : null}
       </Data>
     </>
   </ScrollContainer>

@@ -52,7 +52,7 @@ export default ({loading, popular, topRated, today, thisWeek, refreshFn}) => (
             <List title = 'Airing Today'>
                 {today.map(show => (
                     <Horizontal
-                    isTv = {true}
+                        isTv = {true}
                         key={show.id}
                         id= {show.id}
                         title={show.name}
